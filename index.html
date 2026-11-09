@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satire & Social Critique: The Cinematic Weapon Arcade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .cinzel {
+            font-family: 'Cinzel', serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-between p-4 md:p-8">
+
+    <!-- Header -->
+    <header class="w-full max-w-4xl text-center mb-6">
+        <div class="inline-block px-4 py-1 mb-2 bg-amber-500/10 border border-amber-500/30 rounded-full text-amber-400 text-xs font-semibold tracking-wider uppercase">
+            Interactive Learning Widget: Satire & Social Critique
+        </div>
+        <h1 class="cinzel text-3xl md:text-5xl font-extrabold text-amber-400 tracking-wide mb-2">
+            The Cinematic Weapon Arcade
+        </h1>
+        <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
+            Test your ability to decode how satirical comedies use humor, exaggeration, irony, and parody to smuggle serious social critiques past our psychological defenses.
+        </p>
+    </header>
+
+    <!-- Main Game Container -->
+    <main class="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden p-6 md:p-10 relative">
+        
+        <!-- HUD / Stats Bar -->
+        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6 text-sm md:text-base font-medium">
+            <div class="flex items-center space-x-2">
+                <span class="text-slate-400">Mission:</span>
+                <span id="current-case-num" class="text-amber-400 font-bold">1</span>
+                <span class="text-slate-600">/</span>
+                <span id="total-cases" class="text-slate-400">4</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-1">
+                    <span>🔥</span>
+                    <span class="text-slate-400">Streak:</span>
+                    <span id="streak-count" class="text-orange-400 font-bold">0</span>
+                </div>
+                <div class="flex items-center space-x-1 bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
+                    <span class="text-amber-400 font-bold">Score:</span>
+                    <span id="score-val" class="text-amber-400 font-bold">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question View -->
+        <div id="quiz-view">
+            <!-- Scenario Box -->
+            <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-5 md:p-6 mb-6">
+                <div class="text-xs uppercase tracking-wider text-amber-500/80 font-bold mb-2 flex items-center justify-between">
+                    <span>🎬 Film Satire Case Study: <strong id="movie-title-tag" class="text-white">Don't Look Up (2021)</strong></span>
+                </div>
+                <p id="scenario-text" class="text-slate-200 text-base md:text-lg font-medium leading-relaxed mb-4">
+                    Loading scenario...
+                </p>
+                <div class="bg-slate-900/80 p-3 rounded-lg border border-slate-800/80 text-xs text-slate-400">
+                    <strong class="text-slate-300">Core Satirical Technique:</strong> <span id="technique-tag" class="text-amber-300">Loading...</span>
+                </div>
+            </div>
+
+            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-3 text-center">
+                Identify the primary satirical mechanism or critical lens at work:
+            </h3>
+
+            <!-- Options Grid -->
+            <div id="options-grid" class="grid grid-cols-1 gap-3 mb-6">
+                <!-- Dynamically populated options -->
+            </div>
+        </div>
+
+        <!-- Feedback View (Hidden by default) -->
+        <div id="feedback-view" class="hidden text-center py-6">
+            <div id="feedback-icon" class="text-5xl mb-3">✅</div>
+            <h2 id="feedback-title" class="cinzel text-2xl font-bold mb-2 text-emerald-400">Brilliant Critique!</h2>
+            <p id="feedback-desc" class="text-slate-300 text-sm md:text-base max-w-lg mx-auto mb-6 leading-relaxed">
+                Explanation goes here...
+            </p>
+            <button onclick="nextCase()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 py-3 rounded-xl transition shadow-lg shadow-amber-500/20">
+                Next Mission ➔
+            </button>
+        </div>
+
+        <!-- Completion Screen (Hidden by default) -->
+        <div id="completion-view" class="hidden text-center py-8">
+            <div class="text-6xl mb-4">🏆</div>
+            <h2 class="cinzel text-3xl font-extrabold text-amber-400 mb-2">Master Satire Analyst!</h2>
+            <p class="text-slate-300 mb-6 text-base">You have successfully decoded how cinema uses humor as a sharp subversive weapon.</p>
+            
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-6 max-w-sm mx-auto mb-6">
+                <div class="text-slate-400 text-sm mb-1">Final Score</div>
+                <div id="final-score" class="text-4xl font-extrabold text-amber-400 mb-2">0 / 400</div>
+                <div id="final-badge" class="text-xs uppercase tracking-wider font-bold text-emerald-400 bg-emerald-500/10 py-1 rounded border border-emerald-500/20">Rank: Elite Critic</div>
+            </div>
+
+            <button onclick="restartGame()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-8 py-3 rounded-xl transition shadow-lg shadow-amber-500/20">
+                Replay Arcade 🔄
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-6 text-slate-600 text-xs text-center">
+        Film Studies Non-Majors Curriculum &bull; Interactive Educational Widget
+    </footer>
+
+    <!-- Game Logic Script -->
+    <script>
+        const cases = [
+            {
+                id: 1,
+                movie: "Don't Look Up (2021)",
+                technique: "Exaggeration and Absurdism",
+                scenario: "A government's response to an extinction-level comet is dictated entirely by presidential poll numbers and a billionaire tech CEO who wants to mine it for rare minerals, pushing political narcissism to a surreal extreme.",
+                correctAnswer: "Exaggeration and Absurdism",
+                explanation: "Exaggeration (hyperbole) and absurdism act like a magnifying glass, pushing a real-world trend to its logical breaking point to expose the dangers of prioritizing short-term economic profit over survival.",
+                options: [
+                    "Exaggeration and Absurdism",
+                    "Irony and Reversal",
+                    "Parody and Pastiche",
+                    "Disarming Psychological Defense"
+                ]
+            },
+            {
+                id: 2,
+                movie: "Idiocracy (2006)",
+                technique: "Irony and Reversal",
+                scenario: "An anti-intellectual society is so degraded that its Department of the Interior waters crops with a sports energy drink because 'it's got electrolytes,' completely reversing common-sense institutional function.",
+                correctAnswer: "Irony and Reversal",
+                explanation: "Institutional irony highlights the hypocrisy and rot beneath pristine institutional titles, exposing the real-world dangers of neglecting public education and scientific literacy.",
+                options: [
+                    "Exaggeration and Absurdism",
+                    "Irony and Reversal",
+                    "Parody and Pastiche",
+                    "Disarming Psychological Defense"
+                ]
+            },
+            {
+                id: 3,
+                movie: "Hot Fuzz (2007)",
+                technique: "Parody and Pastiche",
+                scenario: "A sleepy English village baking competition and neighborhood watch schedule are treated with the bombastic, explosive cinematic style, editing pace, and orchestral scores of a high-octane Hollywood blockbuster action thriller.",
+                correctAnswer: "Parody and Pastiche",
+                explanation: "Pastiche imitates unique visual styles and media formats, forcing viewers to recognize how cinematic tropes manipulate our emotions while exposing small-town dark xenophobia.",
+                options: [
+                    "Exaggeration and Absurdism",
+                    "Irony and Reversal",
+                    "Parody and Pastiche",
+                    "Disarming Psychological Defense"
+                ]
+            },
+            {
+                id: 4,
+                movie: "Dr. Strangelove (1964)",
+                technique: "Disarming the Audience via Dark Humor",
+                scenario: "A film uses pitch-black dark humor and farcical sexual innuendo about nuclear annihilation during the Cold War, lulling audiences into helpless laughter so their psychological defensive firewall drops before delivering a devastating critique.",
+                correctAnswer: "Disarming Psychological Defense",
+                explanation: "Comedy bypasses our psychological firewall. When a viewer laughs, their critical armor drops in a micro-second of vulnerability, allowing the satirist to smuggle in profound sociological truths.",
+                options: [
+                    "Exaggeration and Absurdism",
+                    "Irony and Reversal",
+                    "Parody and Pastiche",
+                    "Disarming Psychological Defense"
+                ]
+            }
+        ];
+
+        let activeCases = [];
+        let currentIndex = 0;
+        let score = 0;
+        let streak = 0;
+
+        function initGame() {
+            activeCases = [...cases].sort(() => Math.random() - 0.5);
+            currentIndex = 0;
+            score = 0;
+            streak = 0;
+            document.getElementById('completion-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.remove('hidden');
+            loadCase();
+        }
+
+        function loadCase() {
+            const current = activeCases[currentIndex];
+            document.getElementById('current-case-num').textContent = currentIndex + 1;
+            document.getElementById('total-cases').textContent = activeCases.length;
+            document.getElementById('score-val').textContent = score;
+            document.getElementById('streak-count').textContent = streak;
+            
+            document.getElementById('movie-title-tag').textContent = current.movie;
+            document.getElementById('technique-tag').textContent = current.technique;
+            document.getElementById('scenario-text').textContent = current.scenario;
+
+            // Shuffle options
+            const shuffledOptions = [...current.options].sort(() => Math.random() - 0.5);
+            
+            const optionsGrid = document.getElementById('options-grid');
+            optionsGrid.innerHTML = '';
+
+            shuffledOptions.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/50 p-4 rounded-xl text-slate-200 text-sm md:text-base font-medium transition flex items-center justify-between group";
+                btn.innerHTML = `<span>${option}</span> <span class="text-slate-600 group-hover:text-amber-400 transition">➔</span>`;
+                btn.onclick = () => checkAnswer(option, current.correctAnswer);
+                optionsGrid.appendChild(btn);
+            });
+
+            document.getElementById('feedback-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.remove('hidden');
+        }
+
+        function checkAnswer(selected, correct) {
+            const current = activeCases[currentIndex];
+            const isCorrect = selected === correct;
+            
+            const quizView = document.getElementById('quiz-view');
+            const feedbackView = document.getElementById('feedback-view');
+
+            quizView.classList.add('hidden');
+            feedbackView.classList.remove('hidden');
+
+            const feedbackIcon = document.getElementById('feedback-icon');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackDesc = document.getElementById('feedback-desc');
+
+            if (isCorrect) {
+                score += 100 + (streak * 25);
+                streak++;
+                feedbackIcon.textContent = "🎉";
+                feedbackTitle.textContent = "Brilliant Critique!";
+                feedbackTitle.className = "cinzel text-2xl font-bold mb-2 text-emerald-400";
+                feedbackDesc.innerHTML = `<strong class="text-white">Spot on!</strong> ${current.explanation}`;
+            } else {
+                streak = 0;
+                feedbackIcon.textContent = "❌";
+                feedbackTitle.textContent = "Target Missed!";
+                feedbackTitle.className = "cinzel text-2xl font-bold mb-2 text-rose-400";
+                feedbackDesc.innerHTML = `<strong class="text-white">The correct mechanism was: ${correct}.</strong><br><br>${current.explanation}`;
+            }
+
+            document.getElementById('score-val').textContent = score;
+            document.getElementById('streak-count').textContent = streak;
+        }
+
+        function nextCase() {
+            currentIndex++;
+            if (currentIndex < activeCases.length) {
+                loadCase();
+            } else {
+                showCompletion();
+            }
+        }
+
+        function showCompletion() {
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('feedback-view').classList.add('hidden');
+            document.getElementById('completion-view').classList.remove('hidden');
+            document.getElementById('final-score').textContent = `${score} / ${activeCases.length * 100}`;
+            
+            const badge = document.getElementById('final-badge');
+            if (score >= 400) {
+                badge.textContent = "Rank: Master Satire Analyst 🎯";
+                badge.className = "text-xs uppercase tracking-wider font-bold text-amber-400 bg-amber-500/10 py-1 px-3 rounded border border-amber-500/20";
+            } else {
+                badge.textContent = "Rank: Junior Critic 🔍";
+                badge.className = "text-xs uppercase tracking-wider font-bold text-blue-400 bg-blue-500/10 py-1 px-3 rounded border border-blue-500/20";
+            }
+        }
+
+        function restartGame() {
+            initGame();
+        }
+
+        // Initialize on load
+        window.onload = initGame;
+    </script>
+</body>
+</html>
